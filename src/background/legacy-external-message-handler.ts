@@ -1,6 +1,6 @@
-import { formatAuthResponse } from '@shared/actions/finalize-auth-response';
-import { formatMessageSigningResponse } from '@shared/actions/finalize-message-signature';
-import { formatTxSignatureResponse } from '@shared/actions/finalize-tx-signature';
+import { formatAuthResponse } from '@shared/actions/finalize-auth-reaponse-format';
+import { formatMessageSigningResponse } from '@shared/actions/finalize-message-signature-format';
+import { formatTxSignatureResponse } from '@shared/actions/finalize-tx-signature-format';
 import {
   ExternalMethods,
   InternalMethods,

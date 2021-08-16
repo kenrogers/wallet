@@ -84,6 +84,9 @@ jobs:
       - create-github-release
     outputs:
       publish_status: ${{ steps.publish-chrome.outputs.publish_status }}
+    env:
+      MINIFY_PRODUCTION_BUILD: false
+      TARGET_BROWSER: chromium
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
@@ -127,6 +130,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MINIFY_PRODUCTION_BUILD: true
+      TARGET_BROWSER: firefox
     if: startsWith(github.ref, 'refs/tags/v')
     needs:
       - pre-run
