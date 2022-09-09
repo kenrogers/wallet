@@ -1,12 +1,15 @@
 name: Playwright Tests
+
 env:
   CI: true
   WALLET_ENVIRONMENT: testing
+
 on:
   push:
-    branches: [dev, main]
+    branches: [dev]
   pull_request:
-    branches: [dev, main]
+    branches: [dev]
+
 jobs:
   test:
     timeout-minutes: 60
@@ -16,13 +19,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - name: Install dependencies
         run: yarn
+
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps
+
       - name: Build extension in test mode
         run: yarn build:test
-      - name: Run Playwright tests
+
         # Playwright can only test extensions in headed mode, see
         # https://playwright.dev/docs/chrome-extensions. To run a browser in
         # headed mode, a display server is necessary. However, this job runs on
@@ -33,6 +39,7 @@ jobs:
         # provides a virtual X display server to the process it runs, allowing
         # processes that require a display server to run in environments where
         # one is not available.
+      - name: Run Playwright tests
         run: xvfb-run yarn playwright test
       - uses: actions/upload-artifact@v3
         if: always()

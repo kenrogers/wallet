@@ -21,9 +21,7 @@ const IS_TEST_ENV = process.env.TEST_ENV === 'true';
 
 chrome.runtime.onInstalled.addListener(async details => {
   if (details.reason === 'install' && !IS_TEST_ENV) {
-    await chrome.tabs.create({
-      url: chrome.runtime.getURL(`index.html#${RouteUrls.Onboarding}`),
-    });
+    await chrome.tabs.create({ url: chrome.runtime.getURL(`index.html#${RouteUrls.Onboarding}`) });
   }
 });
 
@@ -60,9 +58,3 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // Listener fn must return `true` to indicate the response will be async
   return true;
 });
-
-if (IS_TEST_ENV) {
-  // Expose a helper function to open a new tab with the wallet from tests
-  (globalThis as any).openOptionsPage = (page: string) =>
-    chrome.runtime.getURL(`index.html#${page}`);
-}

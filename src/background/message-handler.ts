@@ -1,6 +1,4 @@
-// import { gaiaUrl } from '@shared/constants';
 import { StacksMainnet } from '@stacks/network';
-// import { StacksMainnet } from '@stacks/network';
 import { generateNewAccount, generateWallet, restoreWalletAccounts } from '@stacks/wallet-sdk';
 import memoize from 'promise-memoize';
 
@@ -50,9 +48,11 @@ export async function internalBackgroundMessageHandler(
   sender: chrome.runtime.MessageSender,
   sendResponse: (response?: any) => void
 ) {
-  logger.info(message);
+  // eslint-disable-next-line no-console
+  console.log(message);
   if (!validateMessagesAreFromExtension(sender)) {
     logger.error('Error: Received background script msg from ' + sender.url);
+    sendResponse();
     return;
   }
   logger.debug('Internal message', message);
@@ -68,18 +68,23 @@ export async function internalBackgroundMessageHandler(
       const { keyId, secretKey } = message.payload;
 
       inMemoryKeys.set(keyId, secretKey);
-      // await backupWalletSaltForGaia(secretKey);
+      sendResponse();
       break;
     }
 
     case InternalMethods.RequestInMemoryKeys: {
       sendResponse(Object.fromEntries(inMemoryKeys));
+      sendResponse();
       break;
     }
 
     case InternalMethods.RemoveInMemoryKeys: {
       inMemoryKeys.clear();
+      sendResponse();
       break;
     }
   }
+  // As browser is instructed that, if there is a response it will be
+  // asyncronous, we must always return a response, even if empty
+  sendResponse();
 }

@@ -128,9 +128,7 @@ function AppRoutesAfterUserHasConsented() {
           path={RouteUrls.Fund}
           element={
             <AccountGate>
-              <Suspense fallback={<></>}>
-                <FundPage />
-              </Suspense>
+              <FundPage />
             </AccountGate>
           }
         >

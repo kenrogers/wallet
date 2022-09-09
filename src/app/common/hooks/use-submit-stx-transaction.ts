@@ -28,13 +28,13 @@ interface UseSubmitTransactionCallbackArgs {
   onError(error: Error): void;
 }
 export function useSubmitTransactionCallback({ loadingKey }: UseSubmitTransactionArgs) {
-  const refreshAccountData = useRefreshAllAccountData();
-  const submittedTransactionsActions = useSubmittedTransactionsActions();
   const navigate = useNavigate();
+  const analytics = useAnalytics();
+  const refreshAccountData = useRefreshAllAccountData();
+  const { setActiveTabActivity } = useHomeTabs();
+  const submittedTransactionsActions = useSubmittedTransactionsActions();
   const { setIsLoading, setIsIdle } = useLoading(loadingKey);
   const stacksNetwork = useCurrentStacksNetworkState();
-  const { setActiveTabActivity } = useHomeTabs();
-  const analytics = useAnalytics();
 
   return useCallback(
     ({ onClose, onError }: UseSubmitTransactionCallbackArgs) =>

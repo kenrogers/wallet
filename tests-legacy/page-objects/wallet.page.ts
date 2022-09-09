@@ -5,12 +5,13 @@ import { Page } from 'playwright-core';
 
 import { RouteUrls } from '@shared/route-urls';
 
+import { delay } from '@app/common/utils';
+
 import {
   BrowserDriver,
   createTestSelector,
   randomString,
   timeDifference,
-  wait,
 } from '../integration/utils';
 import { FundPageSelectors } from './fund.selectors';
 import { WalletPageSelectors } from './wallet.selectors';
@@ -61,14 +62,13 @@ export class WalletPage {
   }
 
   static async init(browser: BrowserDriver, path?: RouteUrls) {
-    const background = browser.context.backgroundPages()[0];
-    const pageUrl: string = await background.evaluate(`openOptionsPage("${path || ''}")`);
+    const background = browser.context.serviceWorkers()[0];
+    const extensionId = background.url().split('/')[2];
+    const pageUrl = `chrome-extension://${extensionId}/index.html#${path ?? ''}`;
     const page = await browser.context.newPage();
     await page.goto(pageUrl);
-    page.on('pageerror', (event: { message: any }) => {
-      console.log('Error in wallet:', event.message);
-    });
-    return new this(page);
+    page.on('pageerror', event => console.log('Error in wallet:', event.message));
+    return new WalletPage(page);
   }
 
   static async getAllPages(browser: BrowserDriver) {
@@ -164,7 +164,7 @@ export class WalletPage {
   async backUpKeyAndSetPassword() {
     await this.page.click(this.$confirmBackedUpSecretKey);
     await this.enterNewPassword();
-    await wait(1000);
+    await delay(1000);
   }
 
   async goTo(path: RouteUrls) {
