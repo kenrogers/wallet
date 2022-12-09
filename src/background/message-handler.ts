@@ -83,6 +83,11 @@ export async function internalBackgroundMessageHandler(
       sendResponse();
       break;
     }
+
+    case InternalMethods.CheckServiceWorkerStatus: {
+      sendResponse({ keysInMem: inMemoryKeys.size });
+      break;
+    }
   }
   // As browser is instructed that, if there is a response it will be
   // asyncronous, we must always return a response, even if empty

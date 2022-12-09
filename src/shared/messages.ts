@@ -27,12 +27,15 @@ type OriginatingTabClosed = BackgroundMessage<
   { tabId: number }
 >;
 
+type CheckServiceWorkerStatus = BackgroundMessage<InternalMethods.CheckServiceWorkerStatus>;
+
 export type BackgroundMessages =
   | RequestDerivedStxAccounts
   | ShareInMemoryKeyToBackground
   | RequestInMemoryKeys
   | RemoveInMemoryKeys
-  | OriginatingTabClosed;
+  | OriginatingTabClosed
+  | CheckServiceWorkerStatus;
 
 export function sendMessage(message: BackgroundMessages) {
   return chrome.runtime.sendMessage(message);
