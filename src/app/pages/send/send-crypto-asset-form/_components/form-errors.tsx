@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AnimateHeight from 'react-animate-height';
 
 import { Box, Flex } from '@stacks/ui';
@@ -34,7 +34,7 @@ export function FormErrors() {
   return firstError && shouldDisplayErrors(form) ? (
     <AnimateHeight duration={400} easing="ease-out" height={showHide}>
       <Flex height={openHeight + 'px'}>
-        <ErrorLabel alignSelf="center">{firstError?.[1]}</ErrorLabel>
+        <ErrorLabel alignSelf="center">{firstError?.[1] as React.ReactNode}</ErrorLabel>
       </Flex>
     </AnimateHeight>
   ) : (

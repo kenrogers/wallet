@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { Box, Button, CodeBlock, Stack, color } from '@stacks/ui';
 
 import { Prism } from '@app/common/clarity-prism';
@@ -49,17 +47,18 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   );
 }
 
-export const AppErrorBoundary: FC = ({ children }) => {
+interface AppErrorBoundaryProps {
+  children: React.ReactNode;
+}
+export function AppErrorBoundary({ children }: AppErrorBoundaryProps) {
   const handleOnError = useErrorHandler();
   return (
     <ErrorBoundary
-      onReset={() => {
-        window.location.reload();
-      }}
+      onReset={() => window.location.reload()}
       FallbackComponent={ErrorFallback}
       onError={handleOnError}
     >
       {children}
     </ErrorBoundary>
   );
-};
+}

@@ -19,7 +19,7 @@ export function useFontResizer() {
   const [symbolTextWidth, setSymbolTextWidth] = useState(100);
 
   const onChange = useCallback(
-    event => {
+    (event: any) => {
       const el = event.target;
       const symbol = document.getElementById(assetSymbolId);
       if (!symbol) return;
