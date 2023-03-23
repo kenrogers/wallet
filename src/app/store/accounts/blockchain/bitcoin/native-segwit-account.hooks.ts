@@ -21,7 +21,7 @@ import {
   selectTestnetNativeSegWitKeychain,
 } from './bitcoin-keychain';
 
-function useNativeSegWitCurrentNetworkAccountKeychain() {
+export function useNativeSegWitCurrentNetworkAccountKeychain() {
   const network = useCurrentNetwork();
   return useSelector(
     whenNetwork(network.chain.bitcoin.network)({

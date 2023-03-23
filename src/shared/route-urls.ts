@@ -79,4 +79,5 @@ export enum RouteUrls {
 
   // Request routes
   RpcGetAddresses = '/get-addresses',
+  RpcSignBip322Message = '/sign-bip322-message',
 }

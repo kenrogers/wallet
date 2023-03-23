@@ -33,6 +33,7 @@ import { ReceiveStxModal } from '@app/pages/receive-tokens/receive-stx';
 import { ReceiveCollectibleModal } from '@app/pages/receive/receive-collectible/receive-collectible-modal';
 import { ReceiveCollectibleOrdinal } from '@app/pages/receive/receive-collectible/receive-collectible-oridinal';
 import { RpcGetAddresses } from '@app/pages/rpc-get-addresses/rpc-get-addresses';
+import { RpcSignBip322Message } from '@app/pages/rpc-sign-bip322-message/rpc-sign-bip322-message';
 import { SelectNetwork } from '@app/pages/select-network/select-network';
 import { BroadcastError } from '@app/pages/send/broadcast-error/broadcast-error';
 import { SendInscription } from '@app/pages/send/ordinal-inscription/send-inscription-container';
@@ -252,6 +253,14 @@ function AppRoutesAfterUserHasConsented() {
           element={
             <AccountGate>
               <RpcGetAddresses />
+            </AccountGate>
+          }
+        />
+        <Route
+          path={RouteUrls.RpcSignBip322Message}
+          element={
+            <AccountGate>
+              <RpcSignBip322Message />
             </AccountGate>
           }
         />
