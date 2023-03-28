@@ -1,6 +1,9 @@
+import * as btc from '@scure/btc-signer';
+import { bytesToHex } from '@stacks/common';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import * as yup from 'yup';
 
+import { isTypedArray } from '@shared/utils';
 import { Prettify } from '@shared/utils/type-utils';
 
 import { AppUseQueryConfig } from '@app/query/query-config';
@@ -14,15 +17,17 @@ import { TaprootUtxo } from './use-taproot-address-utxos.query';
  */
 const ordApiGetTransactionOutput = yup
   .object({
-    inscriptions: yup.string(),
     address: yup.string(),
+    inscriptions: yup.string(),
     script_pubkey: yup.string(),
-    value: yup.string().required(),
     transaction: yup.string(),
+    value: yup.string().required(),
   })
   .required();
 
-type OrdApiXyzGetTransactionOutput = Prettify<yup.InferType<typeof ordApiGetTransactionOutput>>;
+export type OrdApiXyzGetTransactionOutput = Prettify<
+  yup.InferType<typeof ordApiGetTransactionOutput>
+>;
 
 async function getOrdinalsAwareUtxo(
   txid: string,
@@ -47,12 +52,15 @@ const queryOptions = {
 } as const;
 
 export function useOrdinalsAwareUtxoQuery<T extends unknown = OrdApiXyzGetTransactionOutput>(
-  { txid, vout }: TaprootUtxo,
+  utxo: TaprootUtxo | btc.TransactionInputRequired,
   options?: AppUseQueryConfig<OrdApiXyzGetTransactionOutput, T>
 ) {
+  const txId = isTypedArray(utxo.txid) ? bytesToHex(utxo.txid) : utxo.txid;
+  const txIndex = 'index' in utxo ? utxo.index : utxo.vout;
+
   return useQuery({
-    queryKey: makeOrdinalsAwareUtxoQueryKey(txid),
-    queryFn: () => getOrdinalsAwareUtxo(txid, vout),
+    queryKey: makeOrdinalsAwareUtxoQueryKey(txId),
+    queryFn: () => getOrdinalsAwareUtxo(txId, txIndex),
     ...queryOptions,
     ...options,
   });
