@@ -1,6 +1,6 @@
 import { Stack } from '@stacks/ui';
 
-import { PageTop } from './page-top';
+import { MessageSigningHeader } from '../../pages/stacks-message-signing-request/components/message-signing-header';
 
 interface MessageSigningRequestLayoutProps {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ interface MessageSigningRequestLayoutProps {
 export function MessageSigningRequestLayout({ children }: MessageSigningRequestLayoutProps) {
   return (
     <Stack px={['loose', 'unset']} spacing="loose" width="100%">
-      <PageTop />
+      <MessageSigningHeader />
       {children}
     </Stack>
   );

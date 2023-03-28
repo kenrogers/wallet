@@ -20,7 +20,6 @@ import { AllowDiagnosticsPage } from '@app/pages/allow-diagnostics/allow-diagnos
 import { ChooseAccount } from '@app/pages/choose-account/choose-account';
 import { FundPage } from '@app/pages/fund/fund';
 import { Home } from '@app/pages/home/home';
-import { MessageSigningRequest } from '@app/pages/message-signing-request/message-signing-request';
 import { BackUpSecretKeyPage } from '@app/pages/onboarding/back-up-secret-key/back-up-secret-key';
 import { MagicRecoveryCode } from '@app/pages/onboarding/magic-recovery-code/magic-recovery-code';
 import { SetPasswordPage } from '@app/pages/onboarding/set-password/set-password';
@@ -42,6 +41,7 @@ import { SendInscriptionReview } from '@app/pages/send/ordinal-inscription/send-
 import { SendInscriptionSummary } from '@app/pages/send/ordinal-inscription/sent-inscription-summary';
 import { sendCryptoAssetFormRoutes } from '@app/pages/send/send-crypto-asset-form/send-crypto-asset-form.routes';
 import { SignOutConfirmDrawer } from '@app/pages/sign-out-confirm/sign-out-confirm';
+import { StacksMessageSigningRequest } from '@app/pages/stacks-message-signing-request/stacks-message-signing-request';
 import { TransactionRequest } from '@app/pages/transaction-request/transaction-request';
 import { UnauthorizedRequest } from '@app/pages/unauthorized-request/unauthorized-request';
 import { Unlock } from '@app/pages/unlock';
@@ -206,7 +206,7 @@ function AppRoutesAfterUserHasConsented() {
           element={
             <AccountGate>
               <Suspense fallback={<LoadingSpinner height="600px" />}>
-                <MessageSigningRequest />
+                <StacksMessageSigningRequest />
               </Suspense>
             </AccountGate>
           }

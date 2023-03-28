@@ -15,11 +15,11 @@ import {
   useSignatureRequestSearchParams,
 } from '@app/store/signatures/requests.hooks';
 
-import { SignatureRequestMessageContent } from './components/message-content';
-import { MessageSigningRequestLayout } from './components/signature-request.layout';
+import { MessageSigningRequestLayout } from '../../features/message-signer/message-signing-request.layout';
+import { StacksSignatureRequestMessageContent } from './components/stacks-signature-message-content';
 import { SignatureRequestStructuredDataContent } from './components/structured-data-content';
 
-export function MessageSigningRequest() {
+export function StacksMessageSigningRequest() {
   const validSignatureRequest = useIsSignatureRequestValid();
   const { requestToken, messageType } = useSignatureRequestSearchParams();
 
@@ -29,7 +29,7 @@ export function MessageSigningRequest() {
 
   if (!isSignedMessageType(messageType)) return null;
 
-  if (!requestToken || !messageType) return null;
+  if (!requestToken) return null;
 
   return (
     <MessageSigningRequestLayout>
@@ -40,7 +40,7 @@ export function MessageSigningRequest() {
         </WarningLabel>
       )}
       {isUtf8MessageType(messageType) && (
-        <SignatureRequestMessageContent requestToken={requestToken} />
+        <StacksSignatureRequestMessageContent requestToken={requestToken} />
       )}
       {isStructuredMessageType(messageType) && (
         <SignatureRequestStructuredDataContent requestToken={requestToken} />

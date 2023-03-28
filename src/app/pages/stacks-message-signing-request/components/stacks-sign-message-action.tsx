@@ -12,17 +12,17 @@ import { createDelay } from '@app/common/utils';
 import { useLedgerNavigate } from '@app/features/ledger/hooks/use-ledger-navigate';
 import { useSignatureRequestSearchParams } from '@app/store/signatures/requests.hooks';
 
-import { useMessageSignerSoftwareWallet } from '../message-signing.utils';
+import { useMessageSignerStacksSoftwareWallet } from '../stacks-message-signing.utils';
 
 const improveUxWithShortDelayAsSigningIsSoFast = createDelay(1000);
 
-export function SignAction(message: SignedMessage) {
+export function StacksSignMessageAction(message: SignedMessage) {
   const analytics = useAnalytics();
   const ledgerNavigate = useLedgerNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const signSoftwareWalletMessage = useMessageSignerSoftwareWallet();
+  const signSoftwareWalletMessage = useMessageSignerStacksSoftwareWallet();
   const { tabId, requestToken } = useSignatureRequestSearchParams();
   const { whenWallet } = useWalletType();
 

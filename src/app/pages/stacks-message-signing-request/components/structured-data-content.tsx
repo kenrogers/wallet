@@ -3,8 +3,8 @@ import { ChainID } from '@stacks/common';
 import { getStructuredDataPayloadFromToken } from '@app/common/signature/requests';
 import { NetworkRow } from '@app/components/network-row';
 
-import { Disclaimer } from './message-signing-disclaimer';
-import { SignAction } from './sign-action';
+import { StacksMessageSigningDisclaimer } from './message-signing-disclaimer';
+import { StacksSignMessageAction } from './stacks-sign-message-action';
 import { StructuredDataBox } from './structured-data-box';
 
 interface SignatureRequestStructuredDataContentProps {
@@ -20,9 +20,9 @@ export function SignatureRequestStructuredDataContent({
     <>
       <StructuredDataBox message={message} domain={domain} />
       <NetworkRow chainId={network?.chainId ?? ChainID.Testnet} />
-      <SignAction message={message} messageType="structured" domain={domain} />
+      <StacksSignMessageAction message={message} messageType="structured" domain={domain} />
       <hr />
-      <Disclaimer appName={appName} />
+      <StacksMessageSigningDisclaimer appName={appName} />
     </>
   );
 }

@@ -3,7 +3,7 @@ import { DisclaimerLayout } from '@app/components/disclaimer';
 interface DisclaimerProps {
   appName?: string;
 }
-export function Disclaimer({ appName }: DisclaimerProps) {
+export function StacksMessageSigningDisclaimer({ appName }: DisclaimerProps) {
   return (
     <DisclaimerLayout
       disclaimerText={`By signing this message, you are authorizing ${

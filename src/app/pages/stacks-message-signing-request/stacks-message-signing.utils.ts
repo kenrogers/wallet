@@ -7,7 +7,7 @@ import { isString } from '@shared/utils';
 
 import { useCurrentStacksAccount } from '@app/store/accounts/blockchain/stacks/stacks-account.hooks';
 
-export function useMessageSignerSoftwareWallet() {
+export function useMessageSignerStacksSoftwareWallet() {
   const account = useCurrentStacksAccount();
   return useCallback(
     ({ message, domain }: { message: string | ClarityValue; domain?: TupleCV }) => {

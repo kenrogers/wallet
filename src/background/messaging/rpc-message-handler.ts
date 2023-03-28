@@ -65,5 +65,18 @@ export async function rpcMessageHander(message: WalletRequests, port: chrome.run
       });
       break;
     }
+
+    default:
+      chrome.tabs.sendMessage(
+        getTabIdFromPort(port),
+        makeRpcErrorResponse('' as any, {
+          id: message.id,
+          error: {
+            code: RpcErrorCode.METHOD_NOT_FOUND,
+            message: `${message.method} is not supported`,
+          },
+        })
+      );
+      break;
   }
 }
