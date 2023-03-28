@@ -1,18 +1,19 @@
 import { ChainID, bytesToHex } from '@stacks/common';
 import { hashMessage } from '@stacks/encryption';
 
+import { HasChildren } from '@app/common/has-children';
 import { getSignaturePayloadFromToken } from '@app/common/signature/requests';
-import { NetworkRow } from '@app/components/network-row';
+import { NoFeesWarningRow } from '@app/components/no-fees-warning-row';
 
 import { MessagePreviewBox } from '../../../features/message-signer/message-preview-box';
 import { StacksMessageSigningDisclaimer } from './message-signing-disclaimer';
-import { StacksSignMessageAction } from './stacks-sign-message-action';
+import { StacksSignMessageActions } from './stacks-sign-message-action';
 
-interface SignatureRequestMessageContentProps {
+interface SignatureRequestMessageContentProps extends HasChildren {
   requestToken: string;
 }
 export function StacksSignatureRequestMessageContent(props: SignatureRequestMessageContentProps) {
-  const { requestToken } = props;
+  const { requestToken, children } = props;
 
   const signatureRequest = getSignaturePayloadFromToken(requestToken);
   const { message, network } = signatureRequest;
@@ -20,8 +21,8 @@ export function StacksSignatureRequestMessageContent(props: SignatureRequestMess
   return (
     <>
       <MessagePreviewBox message={message} hash={bytesToHex(hashMessage(message))} />
-      <NetworkRow chainId={network?.chainId ?? ChainID.Testnet} />
-      <StacksSignMessageAction message={message} messageType="utf8" />
+      <NoFeesWarningRow chainId={network?.chainId ?? ChainID.Testnet} />
+      {children}
       <hr />
       <StacksMessageSigningDisclaimer appName={appName} />
     </>

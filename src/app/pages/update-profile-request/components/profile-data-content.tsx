@@ -3,7 +3,7 @@ import { Person } from '@stacks/profile';
 
 import { getProfileDataContentFromToken } from '@app/common/profiles/requests';
 import { DisclaimerLayout } from '@app/components/disclaimer';
-import { NetworkRow } from '@app/components/network-row';
+import { NoFeesWarningRow } from '@app/components/no-fees-warning-row';
 
 import { ProfileBox } from './profile-box';
 import { UpdateAction } from './update-action';
@@ -20,7 +20,7 @@ export function ProfileDataContent(props: ProfileDataContentProps) {
   return (
     <>
       <ProfileBox profile={person} />
-      <NetworkRow chainId={network?.chainId ?? ChainID.Testnet} />
+      <NoFeesWarningRow chainId={network?.chainId ?? ChainID.Testnet} />
       <UpdateAction profileUpdaterPayload={profileUpdateRequest} />
       <hr />
       <DisclaimerLayout

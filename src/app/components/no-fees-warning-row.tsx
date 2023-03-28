@@ -5,10 +5,10 @@ import { whenStxChainId } from '@app/common/utils';
 import { SpaceBetween } from '@app/components/layout/space-between';
 import { Caption } from '@app/components/typography';
 
-interface NetworkRowProps {
+interface NoFeesWarningRowProps {
   chainId: ChainID;
 }
-export function NetworkRow({ chainId }: NetworkRowProps) {
+export function NoFeesWarningRow({ chainId }: NoFeesWarningRowProps) {
   return (
     <Box spacing="base">
       <SpaceBetween position="relative">

@@ -46,7 +46,6 @@ interface WhenSignedMessageOfType<T> {
 export function whenSignedMessageOfType(msg: SignedMessage) {
   return <T>({ utf8, structured }: WhenSignedMessageOfType<T>) => {
     if (msg.messageType === 'utf8') return utf8(msg.message);
-    if (msg.messageType === 'structured') return structured(msg.domain, msg.message);
-    throw new Error('Message can only be either `utf8` or `structured`');
+    return structured(msg.domain, msg.message);
   };
 }

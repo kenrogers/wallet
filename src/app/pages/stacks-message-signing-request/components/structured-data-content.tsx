@@ -1,17 +1,18 @@
 import { ChainID } from '@stacks/common';
 
+import { HasChildren } from '@app/common/has-children';
 import { getStructuredDataPayloadFromToken } from '@app/common/signature/requests';
-import { NetworkRow } from '@app/components/network-row';
+import { NoFeesWarningRow } from '@app/components/no-fees-warning-row';
 
 import { StacksMessageSigningDisclaimer } from './message-signing-disclaimer';
-import { StacksSignMessageAction } from './stacks-sign-message-action';
 import { StructuredDataBox } from './structured-data-box';
 
-interface SignatureRequestStructuredDataContentProps {
+interface SignatureRequestStructuredDataContentProps extends HasChildren {
   requestToken: string;
 }
 export function SignatureRequestStructuredDataContent({
   requestToken,
+  children,
 }: SignatureRequestStructuredDataContentProps) {
   const signatureRequest = getStructuredDataPayloadFromToken(requestToken);
   const { domain, message, network } = signatureRequest;
@@ -19,8 +20,8 @@ export function SignatureRequestStructuredDataContent({
   return (
     <>
       <StructuredDataBox message={message} domain={domain} />
-      <NetworkRow chainId={network?.chainId ?? ChainID.Testnet} />
-      <StacksSignMessageAction message={message} messageType="structured" domain={domain} />
+      <NoFeesWarningRow chainId={network?.chainId ?? ChainID.Testnet} />
+      {children}
       <hr />
       <StacksMessageSigningDisclaimer appName={appName} />
     </>

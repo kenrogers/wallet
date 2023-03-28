@@ -1,26 +1,26 @@
 import { Stack } from '@stacks/ui';
 
-import { isSignedMessageType } from '@shared/signature/signature-types';
-
-import { getSignaturePayloadFromToken } from '@app/common/signature/requests';
 import { addPortSuffix, getUrlHostname } from '@app/common/utils';
 import { Caption, Title } from '@app/components/typography';
 import { useCurrentNetworkState } from '@app/store/networks/networks.hooks';
-import { useSignatureRequestSearchParams } from '@app/store/signatures/requests.hooks';
 
-export function MessageSigningHeader() {
+interface MessageSigningHeaderProps {
+  name?: string;
+  origin: string | null;
+}
+export function MessageSigningHeader({ name, origin }: MessageSigningHeaderProps) {
   const { chain, isTestnet } = useCurrentNetworkState();
-  const { origin, requestToken, messageType } = useSignatureRequestSearchParams();
-  if (!requestToken) return null;
-  if (!isSignedMessageType(messageType)) return null;
-  const signatureRequest = getSignaturePayloadFromToken(requestToken);
 
-  const appName = signatureRequest.appDetails?.name;
   const originAddition = origin ? ` (${getUrlHostname(origin)})` : '';
   const testnetAddition = isTestnet
     ? ` using ${getUrlHostname(chain.stacks.url)}${addPortSuffix(chain.stacks.url)}`
     : '';
-  const caption = appName ? `Requested by "${appName}"${originAddition}${testnetAddition}` : null;
+
+  const displayName = name ?? origin;
+
+  const caption = displayName
+    ? `Requested by ${displayName}${originAddition}${testnetAddition}`
+    : null;
 
   return (
     <Stack pt="extra-loose" spacing="base">

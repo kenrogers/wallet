@@ -4,7 +4,7 @@ import { HashDrawer } from '../../pages/stacks-message-signing-request/component
 
 interface MessageBoxProps {
   message: string;
-  hash: string;
+  hash?: string;
 }
 export function MessagePreviewBox({ message, hash }: MessageBoxProps) {
   return (
