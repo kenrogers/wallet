@@ -1,5 +1,4 @@
 import * as secp from '@noble/secp256k1';
-import { base64 } from '@scure/base';
 import * as btc from '@scure/btc-signer';
 import { bytesToHex, hexToBytes, utf8ToBytes } from '@stacks/common';
 
@@ -72,10 +71,9 @@ describe(signBip322MessageSimple.name, () => {
       //   'AkcwRAIgM2gBAQqvZX15ZiysmKmQpDrG83avLIT492QBzLnQIxYCIBaTpOaD20qRlEylyxFSeEA2ba9YOixpX8z46TSDtS40ASECx/EgAxlkQpQ9hYjgGu6EBCPMVPwVIVJqO4XCsMvViHI='
       // );
       // hello world
-      expect().toEqual(
+      expect(signature).toEqual(
         'AkgwRQIhAOzyynlqt93lOKJr+wmmxIens//zPzl9tqIOua93wO6MAiBi5n5EyAcPScOjf1lAqIUIQtr3zKNeavYabHyR8eGhowEhAsfxIAMZZEKUPYWI4BruhAQjzFT8FSFSajuFwrDL1Yhy'
       );
     });
   });
 });
-// AkcwRAIgZRfIY3p7/DoVTty6YZbWS71bc5Vct9p9Fia83eRmw2QCICK/ENGfwLtptFluMGs2KsqoNSk89pO7F29zJLUx9a/sASECx/EgAxlkQpQ9hYjgGu6EBCPMVPwVIVJqO4XCsMvViHI=

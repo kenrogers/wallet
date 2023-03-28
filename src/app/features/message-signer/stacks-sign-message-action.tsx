@@ -7,7 +7,7 @@ interface StacksSignMessageActionsProps {
   onSignMessageCancel(): void;
   isLoading: boolean;
 }
-export function StacksSignMessageActions(props: StacksSignMessageActionsProps) {
+export function SignMessageActions(props: StacksSignMessageActionsProps) {
   const { onSignMessage, onSignMessageCancel, isLoading } = props;
   const { whenWallet } = useWalletType();
 
