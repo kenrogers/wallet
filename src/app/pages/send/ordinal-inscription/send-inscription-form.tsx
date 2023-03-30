@@ -53,7 +53,7 @@ export function SendInscriptionForm() {
 
   const generateTx = useGenerateSignedOrdinalTx(utxo, fee);
 
-  async function reviewTransaction(values: OrdinalSendFormValues) {
+  async function setTransactionFee(values: OrdinalSendFormValues) {
     const resp = generateTx(values);
 
     if (!canUtxoCoverFee(fee, utxo.value)) {
@@ -81,7 +81,7 @@ export function SendInscriptionForm() {
     if (!resp) return logger.error('Attempted to generate raw tx, but no tx exists');
 
     const { hex } = resp;
-    return navigate(RouteUrls.SendOrdinalInscriptionReview, {
+    return navigate(RouteUrls.SendOrdinalInscriptionSetFee, {
       state: { fee, inscription, utxo, recipient: values.recipient, tx: hex },
     });
   }
@@ -93,7 +93,7 @@ export function SendInscriptionForm() {
       onSubmit={async values => {
         try {
           setIsLoading(true);
-          await reviewTransaction(values);
+          await setTransactionFee(values);
         } finally {
           setIsLoading(false);
         }

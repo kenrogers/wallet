@@ -23,7 +23,6 @@ import {
 import { ModalHeader } from '@app/components/modal-header';
 import { PrimaryButton } from '@app/components/primary-button';
 import { useCurrentNativeSegwitUtxos } from '@app/query/bitcoin/address/address.hooks';
-import { useBitcoinFeeRate } from '@app/query/bitcoin/fees/fee-estimates.hooks';
 import { useBitcoinBroadcastTransaction } from '@app/query/bitcoin/transaction/use-bitcoin-broadcast-transaction';
 import { useCryptoCurrencyMarketData } from '@app/query/common/market-data/market-data.hooks';
 
@@ -31,12 +30,19 @@ import { useSendFormNavigate } from '../../hooks/use-send-form-navigate';
 
 const symbol = 'BTC';
 
-export function BtcSendFormConfirmation() {
+function useBtcSendFormConfirmationState() {
   const location = useLocation();
+  return {
+    tx: get(location.state, 'tx') as string,
+    fee: get(location.state, 'fee') as string,
+    arrivesIn: get(location.state, 'time') as string,
+    recipient: get(location.state, 'recipient') as string,
+  };
+}
+
+export function BtcSendFormConfirmation() {
   const navigate = useNavigate();
-  const tx = get(location.state, 'tx');
-  const recipient = get(location.state, 'recipient');
-  const fee = get(location.state, 'fee');
+  const { tx, recipient, fee, arrivesIn } = useBtcSendFormConfirmationState();
 
   const { refetch } = useCurrentNativeSegwitUtxos();
   const analytics = useAnalytics();
@@ -52,8 +58,6 @@ export function BtcSendFormConfirmation() {
     baseCurrencyAmountInQuote(createMoneyFromDecimal(Number(transferAmount), symbol), btcMarketData)
   );
   const txFiatValueSymbol = btcMarketData.price.symbol;
-  const { data: feeRate } = useBitcoinFeeRate();
-  const arrivesIn = feeRate ? `~${feeRate.fastestFee} min` : '~10 – 20 min';
 
   const feeInBtc = satToBtc(fee);
   const totalSpend = formatMoney(

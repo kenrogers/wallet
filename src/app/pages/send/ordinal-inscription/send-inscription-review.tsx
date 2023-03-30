@@ -13,7 +13,6 @@ import { BaseDrawer } from '@app/components/drawer/base-drawer';
 import { InfoCard, InfoCardRow, InfoCardSeparator } from '@app/components/info-card/info-card';
 import { PrimaryButton } from '@app/components/primary-button';
 import { useCurrentNativeSegwitUtxos } from '@app/query/bitcoin/address/address.hooks';
-import { useBitcoinFeeRate } from '@app/query/bitcoin/fees/fee-estimates.hooks';
 
 import { useBitcoinBroadcastTransaction } from '../../../query/bitcoin/transaction/use-bitcoin-broadcast-transaction';
 import { CollectiblePreviewCard } from './components/collectible-preview-card';
@@ -24,7 +23,8 @@ function useSendInscriptionReviewState() {
   return {
     signedTx: get(location.state, 'tx') as string,
     recipient: get(location.state, 'recipient', '') as string,
-    fee: get(location.state, 'fee'),
+    fee: get(location.state, 'fee') as number,
+    arrivesIn: get(location.state, 'arrivesIn') as string,
   };
 }
 
@@ -32,15 +32,12 @@ export function SendInscriptionReview() {
   const analytics = useAnalytics();
   const navigate = useNavigate();
 
-  const { signedTx, recipient, fee } = useSendInscriptionReviewState();
+  const { signedTx, recipient, fee, arrivesIn } = useSendInscriptionReviewState();
 
   const { inscription, utxo } = useInscriptionSendState();
   const { refetch } = useCurrentNativeSegwitUtxos();
   const { broadcastTx, isBroadcasting } = useBitcoinBroadcastTransaction();
 
-  const { data: feeRate } = useBitcoinFeeRate();
-
-  const arrivesIn = feeRate ? `~${feeRate?.fastestFee} min` : '~10 – 20 min';
   const summaryFee = formatMoney(createMoney(Number(fee), 'BTC'));
 
   async function sendInscription() {
