@@ -1,6 +1,7 @@
 import * as secp from '@noble/secp256k1';
 import * as btc from '@scure/btc-signer';
 import { bytesToHex, hexToBytes, utf8ToBytes } from '@stacks/common';
+import bitcoin from 'bitcoinjs-lib';
 
 // import { hashBip322Message, signBip322MessageSimple } from './sign-message-bip322';
 import { hashBip322Message, signBip322MessageSimple } from './sign-message-bip322-bitcoinjs';
@@ -76,4 +77,10 @@ describe(signBip322MessageSimple.name, () => {
       );
     });
   });
+});
+
+test.only('sldkjfskld', () => {
+  expect(
+    btc.programToWitness(0, hexToBytes('001466124290d2fc62f8cb83c0e15836a548e43dcade').slice(2))
+  ).toBe(true);
 });

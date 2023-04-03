@@ -211,6 +211,7 @@
     "use-events": "1.4.2",
     "use-latest": "1.2.1",
     "valid-url": "1.0.9",
+    "varuint-bitcoin": "1.1.2",
     "webextension-polyfill": "0.10.0",
     "yup": "0.32.11",
     "zxcvbn": "4.4.2"
